@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phool Fatima | Portfolio</title>
+
+  <style>
+    /* ====== BASIC RESET ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#111;
+      background:#fff;
+      line-height:1.6;
+    }
+
+    /* ====== UTILITIES ====== */
+    .container{ width:min(1100px, 92%); margin:0 auto; }
+    .section{ padding:80px 0; }
+    .section--soft{ background:#f6f7fb; }
+    .accent{ color:#5b5bd6; }
+    .tag{
+      display:inline-block;
+      padding:8px 12px;
+      border:1px solid #e7e7ef;
+      border-radius:999px;
+      font-size:14px;
+      background:#fff;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:12px;
+      text-decoration:none;
+      border:1px solid #111;
+      background:#111;
+      color:#fff;
+      font-weight:700;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .btn:hover{ transform: translateY(-2px); opacity:.95; }
+    .btn--ghost{ background:transparent; color:#111; }
+    .btn--small{ padding:10px 14px; border-radius:10px; }
+
+    .miniLink{
+      text-decoration:none;
+      font-weight:800;
+      color:#111;
+      opacity:.85;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid #ececf5;
+      background:#fff;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .miniLink:hover{ opacity:1; transform: translateY(-1px); }
+
+    /* ====== HEADER / NAV ====== */
+    .header{
+      position: sticky;
+      top:0;
+      z-index:50;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid #efeff6;
+    }
+    .nav{
+      width:min(1100px, 92%);
+      margin:0 auto;
+      padding:14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position:relative;
+    }
+    .logo{
+      font-size:20px;
+      font-weight:900;
+      text-decoration:none;
+      color:#111;
+    }
+    .logo span{ color:#5b5bd6; }
+
+    .nav__links{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+    .nav__links a{
+      text-decoration:none;
+      color:#111;
+      font-weight:700;
+      opacity:.85;
+    }
+    .nav__links a:hover{ opacity:1; }
+
+    /* Mobile menu */
+    .nav__toggle{ display:none; }
+    .nav__hamburger{ display:none; cursor:pointer; }
+    .nav__hamburger span{
+      display:block;
+      width:26px;
+      height:2px;
+      background:#111;
+      margin:6px 0;
+      border-radius:2px;
+    }
+
+    /* ====== HERO ====== */
+    .hero{
+      padding:60px 0 30px;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(91,91,214,.12), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(17,17,17,.06), transparent 60%);
+    }
+    .hero__wrap{
+      display:grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap:28px;
+      align-items:start;
+    }
+    .hero__text h1{
+      font-size: clamp(34px, 5vw, 54px);
+      line-height:1.15;
+      margin:12px 0;
+    }
+    .subtitle{ color:#222; opacity:.85; max-width:56ch; }
+
+    .hero__cta{ display:flex; gap:12px; margin:20px 0 26px; flex-wrap:wrap; }
+
+    .hero__meta{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:6px;
+    }
+    .metaCard{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:16px;
+      padding:14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.04);
+    }
+    .metaCard strong{ display:block; font-size:18px; }
+    .metaCard span{ color:#222; opacity:.8; font-size:13px; }
+
+    .hero__card{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.06);
+    }
+    .profile{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:14px;
+    }
+    .profile__img{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      background: linear-gradient(135deg, rgba(91,91,214,.35), rgba(17,17,17,.08));
+      border: 1px solid #e9e9f4;
+    }
+    .profile h3{ font-size:18px; }
+    .profile p{ font-size:13px; opacity:.75; }
+
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 14px; }
+    .chip{
+      padding:8px 10px;
+      border:1px solid #ececf5;
+      border-radius:999px;
+      background:#fafaff;
+      font-size:13px;
+      font-weight:700;
+      opacity:.9;
+    }
+    .cardRow{ display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* ====== SECTION GRIDS ====== */
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:22px; align-items:start; }
+
+    .sectionHead{ margin-bottom:18px; }
+    .sectionHead h2{ font-size:34px; }
+    .sectionHead p{ opacity:.8; max-width:70ch; }
+
+    /* About */
+    .aboutCard{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.05);
+    }
+    .aboutCard ul{ list-style:none; margin:12px 0 14px; }
+    .aboutCard li{ padding:8px 0; border-bottom:1px dashed #ececf5; }
+    .aboutCard li span{ font-weight:900; }
+
+    .aboutStats{
+      display:flex;
+      gap:12px;
+      margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .stat{
+      padding:12px 14px;
+      border:1px solid #ededf4;
+      border-radius:16px;
+      background:#fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,.04);
+    }
+    .stat strong{ display:block; font-size:16px; }
+    .stat span{ font-size:13px; opacity:.75; }
+
+    /* Skills */
+    .skills{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+    .skillCard{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.04);
+    }
+    .skillCard p{ opacity:.8; margin:8px 0 12px; font-size:14px; }
+
+    .bars{ display:grid; gap:10px; }
+    .bar{ display:grid; grid-template-columns: 110px 1fr; gap:10px; align-items:center; }
+    .bar span{ font-weight:800; font-size:13px; opacity:.9; }
+    .bar b{ height:10px; border-radius:999px; background:#111; display:block; }
+
+    /* Projects */
+    .projects{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+    .projectCard{
+      border:1px solid #ededf4;
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow: 0 14px 40px rgba(0,0,0,.05);
+    }
+    .projectThumb{
+      height:160px;
+      background: linear-gradient(135deg, rgba(91,91,214,.18), rgba(17,17,17,.05));
+    }
+    .projectBody{ padding:16px; }
+    .projectBody p{ opacity:.8; margin:8px 0 12px; }
+    .projectTags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+    .projectTags span{
+      font-size:12px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid #ececf5;
+      background:#fafaff;
+    }
+
+    /* Services */
+    .services{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+    .serviceCard{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.04);
+    }
+    .serviceCard ul{ margin-top:10px; padding-left:18px; }
+    .serviceCard li{ margin:6px 0; opacity:.85; }
+
+    /* Contact */
+    .contactCards{ display:grid; gap:12px; margin-top:14px; }
+    .contactCard{
+      padding:14px;
+      border:1px solid #ededf4;
+      border-radius:16px;
+      background:#fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,.04);
+    }
+    .contactCard span{ opacity:.8; }
+
+    .form{
+      background:#fff;
+      border:1px solid #ededf4;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.05);
+    }
+    .form label{ display:grid; gap:8px; margin-bottom:12px; }
+    .form span{ font-weight:900; font-size:13px; opacity:.9; }
+    input, textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid #e6e6f0;
+      outline:none;
+      font-size:14px;
+    }
+    input:focus, textarea:focus{ border-color:#5b5bd6; }
+    .formNote{ margin-top:10px; font-size:12px; opacity:.7; }
+
+    /* Footer */
+    .footer{
+      padding:26px 0;
+      border-top:1px solid #efeff6;
+      background:#fff;
+    }
+    .footer__wrap{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .footer p{ opacity:.8; }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 900px){
+      .hero__wrap{ grid-template-columns:1fr; }
+      .grid2{ grid-template-columns:1fr; }
+      .skills, .projects, .services{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 720px){
+      .nav__hamburger{ display:block; }
+      .nav__toggle{ display:block; position:absolute; opacity:0; pointer-events:none; }
+
+      .nav__links{
+        position:absolute;
+        left:4%;
+        right:4%;
+        top:64px;
+        background:#fff;
+        border:1px solid #efeff6;
+        border-radius:16px;
+        padding:12px;
+        display:none;
+        flex-direction:column;
+        gap:10px;
+        box-shadow: 0 14px 40px rgba(0,0,0,.08);
+      }
+      .nav__toggle:checked ~ .nav__links{ display:flex; }
+      .hero__meta{ grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <header class="header" id="top">
+    <nav class="nav">
+      <a class="logo" href="#top">Phool<span>Fatima</span></a>
+
+      <input type="checkbox" id="navToggle" class="nav__toggle" />
+      <label for="navToggle" class="nav__hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <div class="nav__links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#contact" class="btn btn--small">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <section class="container hero__wrap">
+      <div class="hero__text">
+        <p class="tag">Designer • Developer • Lecturer</p>
+        <h1>Hi, I’m <span class="accent">Phool Fatima</span>.</h1>
+        <p class="subtitle">
+          I design clean, modern brands and build responsive websites.
+          I help clients turn ideas into professional visuals and functional pages.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn btn--ghost" href="#contact">Hire Me</a>
+        </div>
+
+        <div class="hero__meta">
+          <div class="metaCard"><strong>50+</strong><span>Designs Delivered</span></div>
+          <div class="metaCard"><strong>20+</strong><span>Web Pages Built</span></div>
+          <div class="metaCard"><strong>5★</strong><span>Client Rating</span></div>
+        </div>
+      </div>
+
+      <div class="hero__card">
+        <div class="profile">
+          <div class="profile__img"></div>
+          <div>
+            <h3>Phool Fatima</h3>
+            <p>Branding • UI/UX • Web (HTML/CSS)</p>
+          </div>
+        </div>
+
+        <div class="chips">
+          <span class="chip">Logo Design</span>
+          <span class="chip">Brand Guidelines</span>
+          <span class="chip">Social Media</span>
+          <span class="chip">Landing Pages</span>
+        </div>
+
+        <div class="cardRow">
+          <a class="miniLink" href="#contact">Email</a>
+          <a class="miniLink" href="#projects">Portfolio</a>
+          <a class="miniLink" href="#services">Services</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container grid2">
+      <div>
+        <h2>About Me</h2>
+        <p>
+          I’m Phool Fatima — a creative designer and web developer who loves building
+          clean brands and modern, responsive layouts.
+        </p>
+        <p>
+          I work with startups and businesses on logos, brand identity, marketing content,
+          and simple websites using HTML/CSS.
+        </p>
+
+        <div class="aboutStats">
+          <div class="stat"><strong>Fast</strong><span>delivery</span></div>
+          <div class="stat"><strong>Clean</strong><span>design</span></div>
+          <div class="stat"><strong>Responsive</strong><span>web</span></div>
+        </div>
+      </div>
+
+      <div class="aboutCard">
+        <h3>Quick Info</h3>
+        <ul>
+          <li><span>Full Name:</span> Phool Fatima</li>
+          <li><span>Role:</span> Designer & Web Developer</li>
+          <li><span>Focus:</span> Branding, UI, HTML/CSS</li>
+          <li><span>Availability:</span> Freelance / Projects</li>
+        </ul>
+        <a class="btn btn--small" href="#contact">Let’s Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section section--soft" id="skills">
+    <div class="container">
+      <div class="sectionHead">
+        <h2>Skills</h2>
+        <p>Tools and strengths I use to create professional results.</p>
+      </div>
+
+      <div class="skills">
+        <div class="skillCard">
+          <h3>Design</h3>
+          <p>Logo, brand identity, social media posts, flyers, packaging.</p>
+          <div class="bars">
+            <div class="bar"><span>Branding</span><b style="width:92%"></b></div>
+            <div class="bar"><span>UI/UX</span><b style="width:85%"></b></div>
+            <div class="bar"><span>Typography</span><b style="width:80%"></b></div>
+          </div>
+        </div>
+
+        <div class="skillCard">
+          <h3>Web</h3>
+          <p>Responsive HTML/CSS pages and clean layouts that look great on mobile.</p>
+          <div class="bars">
+            <div class="bar"><span>HTML</span><b style="width:90%"></b></div>
+            <div class="bar"><span>CSS</span><b style="width:88%"></b></div>
+            <div class="bar"><span>Responsive</span><b style="width:86%"></b></div>
+          </div>
+        </div>
+
+        <div class="skillCard">
+          <h3>Soft Skills</h3>
+          <p>Client communication, revisions, clarity, and on-time delivery.</p>
+          <div class="bars">
+            <div class="bar"><span>Communication</span><b style="width:90%"></b></div>
+            <div class="bar"><span>Creativity</span><b style="width:92%"></b></div>
+            <div class="bar"><span>Consistency</span><b style="width:88%"></b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="sectionHead">
+        <h2>Projects</h2>
+        <p>Replace these with your real projects anytime.</p>
+      </div>
+
+      <div class="projects">
+        <article class="projectCard">
+          <div class="projectThumb"></div>
+          <div class="projectBody">
+            <h3>Brand Identity Kit</h3>
+            <p>Logo + colors + typography + guidelines for a modern brand.</p>
+            <div class="projectTags">
+              <span>Logo</span><span>Guidelines</span><span>Branding</span>
+            </div>
+            <a class="miniLink" href="#contact">Request Similar</a>
+          </div>
+        </article>
+
+        <article class="projectCard">
+          <div class="projectThumb"></div>
+          <div class="projectBody">
+            <h3>Landing Page Design</h3>
+            <p>Responsive layout with hero, features, testimonials and CTA.</p>
+            <div class="projectTags">
+              <span>HTML</span><span>CSS</span><span>Responsive</span>
+            </div>
+            <a class="miniLink" href="#contact">Request Similar</a>
+          </div>
+        </article>
+
+        <article class="projectCard">
+          <div class="projectThumb"></div>
+          <div class="projectBody">
+            <h3>Social Media Post Pack</h3>
+            <p>Clean templates for Instagram posts + stories (brand-consistent).</p>
+            <div class="projectTags">
+              <span>Canva</span><span>IG</span><span>Templates</span>
+            </div>
+            <a class="miniLink" href="#contact">Request Similar</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section section--soft" id="services">
+    <div class="container">
+      <div class="sectionHead">
+        <h2>Services</h2>
+        <p>Choose a service — I can customize packages based on your needs.</p>
+      </div>
+
+      <div class="services">
+        <div class="serviceCard">
+          <h3>Logo Design</h3>
+          <p>Modern logo concepts with revisions and final deliverables.</p>
+          <ul>
+            <li>3 concepts</li>
+            <li>Unlimited revisions</li>
+            <li>PNG/SVG/PDF</li>
+          </ul>
+        </div>
+
+        <div class="serviceCard">
+          <h3>Brand Identity</h3>
+          <p>Complete brand look: colors, fonts, usage rules.</p>
+          <ul>
+            <li>Brand guide</li>
+            <li>Color palette</li>
+            <li>Typography rules</li>
+          </ul>
+        </div>
+
+        <div class="serviceCard">
+          <h3>HTML/CSS Website</h3>
+          <p>Responsive portfolio/landing pages with clean code.</p>
+          <ul>
+            <li>Mobile-first</li>
+            <li>Fast loading</li>
+            <li>Easy to edit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container grid2">
+      <div>
+        <h2>Contact</h2>
+        <p>Send a message and I’ll reply with a quick plan.</p>
+
+        <div class="contactCards">
+          <div class="contactCard"><strong>Email</strong><span>yourname@email.com</span></div>
+          <div class="contactCard"><strong>Location</strong><span>Pakistan</span></div>
+          <div class="contactCard"><strong>Available</strong><span>Freelance Projects</span></div>
+        </div>
+      </div>
+
+      <form class="form" action="#" method="post">
+        <label>
+          <span>Your Name</span>
+          <input type="text" placeholder="Enter your name" required />
+        </label>
+
+        <label>
+          <span>Your Email</span>
+          <input type="email" placeholder="Enter your email" required />
+        </label>
+
+        <label>
+          <span>Your Message</span>
+          <textarea rows="5" placeholder="Tell me about your project..." required></textarea>
+        </label>
+
+        <button class="btn" type="submit">Send Message</button>
+        <p class="formNote">*This form is front-end only (no backend).</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__wrap">
+      <p>© <span id="year"></span> Phool Fatima. All rights reserved.</p>
+      <a class="miniLink" href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
